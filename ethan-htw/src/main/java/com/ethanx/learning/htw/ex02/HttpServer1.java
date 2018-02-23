@@ -1,8 +1,8 @@
 /**
  * Author:  xiaoxin <xiaoxin@tp-link.com.cn>
- * Created: 2018-02-22
+ * Created: 2018-02-23
  */
-package com.ethanx.learning.htw.ex01;
+package com.ethanx.learning.htw.ex02;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,17 +12,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class HttpServer {
-
-    /**
-     * WEB_ROOT is the directory where our HTML and other files reside.
-     * For this package, WEB_ROOT is the "webroot" directory under the working
-     * directory.
-     * The working directory is the location in the file system
-     * from where the java command was invoked.
-     */
-    public static final String WEB_ROOT = System.getProperty("user.dir") + File.separator + "ethan-htw" + File.separator +
-            "src" + File.separator + "webroot";
+public class HttpServer1 {
 
     // shutdown command
     private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
@@ -31,7 +21,7 @@ public class HttpServer {
     private boolean shutdown = false;
 
     public static void main(String[] args) {
-        HttpServer server = new HttpServer();
+        HttpServer1 server = new HttpServer1();
         server.await();
     }
 
@@ -39,7 +29,7 @@ public class HttpServer {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket();
-            serverSocket.bind(new InetSocketAddress("127.0.0.1", 8080));
+            serverSocket.bind(new InetSocketAddress("127.0.0.1", 808));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(1);
@@ -60,8 +50,17 @@ public class HttpServer {
                 // create Response object
                 Response response = new Response(output);
                 response.setRequest(request);
-                response.sendStaticResource();
 
+                // check if this is a request for a servlet or a static resource
+                // a request for a servlet begins with "/servlet/"
+                if (request.getUri().startsWith("/servlet/")) {
+                    ServletProcessor1 processor = new ServletProcessor1();
+                    processor.process(request, response);
+                }
+                else {
+                    StaticResourceProcessor processor = new StaticResourceProcessor();
+                    processor.process(request, response);
+                }
                 // Close the socket
                 socket.close();
 
@@ -69,6 +68,7 @@ public class HttpServer {
                 shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
             } catch (IOException e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
     }

@@ -19,14 +19,6 @@ public class Response implements ServletResponse {
 
     private static final int BUFFER_SIZE = 1024;
 
-    /*
-    HTTP Response = Status-Line
-    *(( general-header | response-header | entity-header ) CRLF)
-    CRLF
-    [ message-body ]
-    Status-Line = HTTP-Version SP Status-Code SP Reason-Phrase CRLF
-    */
-
     private OutputStream output;
 
     private Request request;

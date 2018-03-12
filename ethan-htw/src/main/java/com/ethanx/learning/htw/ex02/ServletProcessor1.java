@@ -12,6 +12,8 @@ import java.net.URLStreamHandler;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 public class ServletProcessor1 {
 
@@ -50,7 +52,8 @@ public class ServletProcessor1 {
         Servlet servlet;
         try {
             servlet = (Servlet) myClass.newInstance();
-            servlet.service(request, response);
+            // unsafety
+            servlet.service((ServletRequest) request,(ServletResponse) response);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

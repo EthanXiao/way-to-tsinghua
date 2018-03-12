@@ -1,7 +1,3 @@
-/**
- * Author:  xiaoxin <xiaoxin@tp-link.com.cn>
- * Created: 2018-02-23
- */
 package com.ethanx.learning.htw.ex02;
 
 import java.io.IOException;
@@ -11,7 +7,10 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class HttpServer1 {
+/**
+ * Created by xiaoxin on 2018/2/24.
+ */
+public class HttpServer2 {
 
   // shutdown command
   private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
@@ -20,15 +19,16 @@ public class HttpServer1 {
   private boolean shutdown = false;
 
   public static void main(String[] args) {
-    HttpServer1 server = new HttpServer1();
+    HttpServer2 server = new HttpServer2();
     server.await();
   }
+
 
   private void await() {
     ServerSocket serverSocket = null;
     try {
       serverSocket = new ServerSocket();
-      serverSocket.bind(new InetSocketAddress("127.0.0.1", 80));
+      serverSocket.bind(new InetSocketAddress("127.0.0.1", 808));
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);
@@ -53,7 +53,7 @@ public class HttpServer1 {
         // check if this is a request for a servlet or a static resource
         // a request for a servlet begins with "/servlet/"
         if (request.getUri().startsWith("/servlet/")) {
-          ServletProcessor1 processor = new ServletProcessor1();
+          ServletProcessor2 processor = new ServletProcessor2();
           processor.process(request, response);
         } else {
           StaticResourceProcessor processor = new StaticResourceProcessor();

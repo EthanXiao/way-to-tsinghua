@@ -17,7 +17,8 @@
     <modules>
         <module>ethan-htw</module>
         <module>ethan-leetcode</module>
-        <module>ethan-design-pattern</module>
-        <module>algorithm</module>
+        <module>ethan-design-patterns</module>
+        <module>ethan-algorithm</module>
+        <module>ethan-hadoop</module>
     </modules>
 </project>
